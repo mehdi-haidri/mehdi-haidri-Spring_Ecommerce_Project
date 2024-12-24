@@ -1,0 +1,6 @@
+spring:
+  config:
+    import: optional:configserver:http://localhost:8888
+    customer-url: http://localhost:8222/api/v1/customers
+  application:
+    name: order-service
