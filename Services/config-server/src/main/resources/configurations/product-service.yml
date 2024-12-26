@@ -20,9 +20,12 @@ spring:
 
 s3:
   bucket-name: product-images-1234
-  bucket-region: region
-  access-key-id: id
-  secret-access-key: acess key
+  bucket-region: "***"
+  access-key-id: "**"
+  secret-access-key: "***"
+
+
+
 
 server:
   port: 8050

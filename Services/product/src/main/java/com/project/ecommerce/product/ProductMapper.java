@@ -1,7 +1,10 @@
 package com.project.ecommerce.product;
 
 
+import com.project.ecommerce.aws.S3Service;
 import com.project.ecommerce.category.Category;
+import jdk.jfr.Registered;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,12 +12,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+
 public class ProductMapper {
+
+
+
+
     public Product toProduct(ProductRequest request) {
         String Image_Path = "";
-        if (!request.image().isEmpty()){
+       /* if (!request.image().isEmpty()){
            Image_Path = "Bucket/" +request.image().getName();
-        }
+        }*/
 
         return Product.builder()
                 .image(Image_Path)
@@ -42,10 +50,9 @@ public class ProductMapper {
 
     }
 
-    public static ProductResponse toProductResponse(Product product) {
+    public static ProductResponse toProductResponse(Product product ,List <String> imageUrls) {
 
 
-        List<String> imageUrl = new ArrayList<>();
 
         return new ProductResponse(
                 product.getId(),
@@ -56,7 +63,7 @@ public class ProductMapper {
                 product.getCategory().getId(),
                 product.getCategory().getName(),
                 product.getCategory().getDescription(),
-                imageUrl
+                imageUrls
                         );
     }
 }

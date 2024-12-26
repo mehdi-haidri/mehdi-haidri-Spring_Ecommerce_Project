@@ -2,6 +2,7 @@ package com.project.ecommerce.product;
 
 
 
+import com.project.ecommerce.aws.S3Service;
 import com.project.ecommerce.exception.PurchaseInformationError;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -12,26 +13,28 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.project.ecommerce.product.ProductMapper.toProductResponse;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
    final    ProductRepository repository;
    final  ProductMapper mapper;
+   final S3Service s3Service ;
 
     public Integer saveProduct(ProductRequest request) {
         try {
-            saveImage(request.image());
-        return repository.save(mapper.toProduct(request)).getId();
+          Product product =  repository.save(mapper.toProduct(request));
+          s3Service.uploadFiles( request.images() , product.getId());
+          return product.getId();
         }catch(Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private void saveImage(MultipartFile image) {
-        System.out.println(image.getName());
-    }
+
 
     @Transactional(rollbackFor = PurchaseInformationError.class)
     public List<ProductPurchaseResponse> purchaseProducts(List<ProductPurchaseRequest> request) {
@@ -69,12 +72,22 @@ public class ProductService {
     }
 
     public ProductResponse findById(Integer productId) {
-        return repository.findById(productId).map(ProductMapper::toProductResponse)
+
+        List<String> imageUrls =  s3Service.generateImageUrls(productId);
+
+        return repository.findById(productId).map(product -> toProductResponse(product ,imageUrls))
                 .orElseThrow( () -> new EntityNotFoundException("product Not found !"));
+
     }
 
     public List<ProductResponse> findAll() {
-        return repository.findAll().stream().map(ProductMapper::toProductResponse).toList();
+
+        return repository.findAll().stream().map(product ->{
+            List<String> imageUrls =  s3Service.generateImageUrls(product.id);
+            return toProductResponse(product ,imageUrls) ;
+        }).toList();
+
+
 
     }
 }
