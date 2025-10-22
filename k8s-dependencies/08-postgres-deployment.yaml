@@ -1,4 +1,3 @@
-# postgres-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,7 +33,7 @@ spec:
               value: /data/postgres
           volumeMounts:
             - name: postgres-storage
-              mountPath: /data/postgres
+              mountPath: /data   # <- mount at /data instead of /data/postgres
       volumes:
         - name: postgres-storage
           persistentVolumeClaim:
