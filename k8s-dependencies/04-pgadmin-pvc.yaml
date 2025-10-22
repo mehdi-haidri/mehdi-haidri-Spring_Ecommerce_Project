@@ -10,5 +10,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: ""
-  volumeName: pv-pgadmin
+  storageClassName: longhorn-retain
