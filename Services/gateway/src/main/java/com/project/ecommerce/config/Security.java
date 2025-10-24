@@ -18,7 +18,7 @@ public class Security {
 
         http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/*").permitAll()
+                        .pathMatchers("/**").permitAll()
                         .anyExchange()
                         .authenticated()
                 )
