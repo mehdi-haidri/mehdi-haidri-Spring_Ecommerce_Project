@@ -9,5 +9,5 @@ spring:
     config:
       server:
         native:
-          search-locations: classpath:/configurations
+          search-locations: classpath:/configurations-pro
 
