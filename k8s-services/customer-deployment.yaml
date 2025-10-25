@@ -19,6 +19,25 @@ spec:
           image: elmahdidevops/customer:latest
           ports:
             - containerPort: 8090
+          env:
+            - name: SPRING_DATA_MONGODB_HOST
+              value: "mongodb"
+            - name: SPRING_DATA_MONGODB_PORT
+              value: "27017"
+            - name: SPRING_DATA_MONGODB_DATABASE
+              value: "customer"
+            - name: SPRING_DATA_MONGODB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: SPRING_DATA_MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: MONGO_INITDB_ROOT_PASSWORD
+
+
 ---
 # customer-service.yaml
 apiVersion: v1
