@@ -9,3 +9,7 @@ spring:
       database: customer
 server:
   port: 8090
+eureka:
+  instance:
+  prefer-ip-address : true
+  hostname : customer
