@@ -5,7 +5,7 @@ metadata:
   name: customer
   namespace: microservices
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: customer
