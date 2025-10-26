@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres:5432/product
+    username: test
+    password: test
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      database: postgresql
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-description: "init"
+    baseline-version: 0
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    baseline-on-migrate: true
+
+s3:
+  bucket-name: product-images-1234
+  bucket-region: "***"
+  access-key-id: "**"
+  secret-access-key: "***"
+
+
+
+
+server:
+  port: 8050

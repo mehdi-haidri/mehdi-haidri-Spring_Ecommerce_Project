@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres:5432/payment
+    username: test
+    password: test
+  jpa:
+    hibernate:
+      ddl-auto: update
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  kafka:
+    producer:
+      bootstrap-servers: my-kafka:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: paymentConfirmation:com.project.ecommerce.notification.PaymentConfirmation
+application:
+  config:
+    customer-url: http://customer:8090/api/v1/customers
+    payment-url: http://payment:8098/api/v1/payments
+    product-url: http://product:8050/api/v1/products
+
+server:
+  port: 8098

@@ -1,34 +1,34 @@
-# customer-deployment.yaml
+# payment-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: customer
+  name: payment
   namespace: microservices
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: customer
+      app: payment
   template:
     metadata:
       labels:
-        app: customer
+        app: payment
     spec:
       containers:
-        - name: customer
-          image: elmahdidevops/customer:latest
+        - name: payment
+          image: elmahdidevops/payment:latest
           ports:
-            - containerPort: 8090
+            - containerPort: 8098
 ---
-# customer-service.yaml
+# payment-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: customer
+  name: payment
   namespace: microservices
 spec:
   selector:
-    app: customer
+    app: payment
   ports:
-    - port: 8090
-      targetPort: 8090
+    - port: 8098
+      targetPort: 8098

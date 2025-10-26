@@ -1,0 +1,34 @@
+# notification-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification
+  namespace: microservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification
+  template:
+    metadata:
+      labels:
+        app: notification
+    spec:
+      containers:
+        - name: notification
+          image: elmahdidevops/notification:latest
+          ports:
+            - containerPort: 8099
+---
+# notification-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification
+  namespace: microservices
+spec:
+  selector:
+    app: notification
+  ports:
+    - port: 8099
+      targetPort: 8099
