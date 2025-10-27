@@ -1,4 +1,3 @@
-# customer-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,6 +18,13 @@ spec:
           image: elmahdidevops/customer:latest
           ports:
             - containerPort: 8090
+          resources:
+            requests:
+              cpu: "200m"        # Minimum CPU requested (0.2 vCPU)
+              memory: "256Mi"    # Minimum memory requested
+            limits:
+              cpu: "500m"        # Max CPU allowed (0.5 vCPU)
+              memory: "512Mi"    # Max memory allowed
 ---
 # customer-service.yaml
 apiVersion: v1
