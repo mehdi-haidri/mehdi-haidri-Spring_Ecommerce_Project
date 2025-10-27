@@ -1,6 +1,3 @@
-
-create
-
 create table if not exists category
 (
     id          integer not null
