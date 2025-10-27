@@ -20,7 +20,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+
 public class S3Service {
 
     private final S3Client s3Client;

@@ -21,12 +21,12 @@ public class ProductService {
 
    final    ProductRepository repository;
    final  ProductMapper mapper;
-   final S3Service s3Service ;
+   /*final S3Service s3Service ;*/
 
     public Integer saveProduct(ProductRequest request) {
         try {
           Product product =  repository.save(mapper.toProduct(request));
-          s3Service.uploadFiles( request.images() , product.getId());
+          /*s3Service.uploadFiles( request.images() , product.getId());*/
           return product.getId();
         }catch(Exception e) {
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class ProductService {
 
     public ProductResponse findById(Integer productId) {
 
-        List<String> imageUrls =  s3Service.generateImageUrls(productId);
+        List<String> imageUrls =  new ArrayList<>();
 
         return repository.findById(productId).map(product -> toProductResponse(product ,imageUrls))
                 .orElseThrow( () -> new EntityNotFoundException("product Not found !"));
@@ -83,7 +83,8 @@ public class ProductService {
     public List<ProductResponse> findAll() {
 
         return repository.findAll().stream().map(product ->{
-            List<String> imageUrls =  s3Service.generateImageUrls(product.id);
+            List<String> imageUrls =  new ArrayList<>();
+
             return toProductResponse(product ,imageUrls) ;
         }).toList();
 
