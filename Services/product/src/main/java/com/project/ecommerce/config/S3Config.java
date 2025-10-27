@@ -7,7 +7,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 
-@Configuration
+/*@Configuration
 public class S3Config {
 
     private final S3Properties s3Properties;
@@ -28,4 +28,4 @@ public class S3Config {
                 .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
                 .build();
     }
-}
+}*/

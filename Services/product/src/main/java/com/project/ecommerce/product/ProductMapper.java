@@ -1,7 +1,7 @@
 package com.project.ecommerce.product;
 
 
-import com.project.ecommerce.aws.S3Service;
+/*import com.project.ecommerce.aws.S3Service;*/
 import com.project.ecommerce.category.Category;
 import jdk.jfr.Registered;
 import lombok.RequiredArgsConstructor;

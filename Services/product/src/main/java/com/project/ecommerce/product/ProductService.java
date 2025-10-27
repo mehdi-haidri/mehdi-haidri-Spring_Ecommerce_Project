@@ -2,7 +2,7 @@ package com.project.ecommerce.product;
 
 
 
-import com.project.ecommerce.aws.S3Service;
+/*import com.project.ecommerce.aws.S3Service;*/
 import com.project.ecommerce.exception.PurchaseInformationError;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
