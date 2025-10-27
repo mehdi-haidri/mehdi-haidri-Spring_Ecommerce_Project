@@ -19,6 +19,13 @@ spec:
           image: openzipkin/zipkin
           ports:
             - containerPort: 9411
+          resources:
+            requests:
+              cpu: "200m"        # Minimum CPU requested (0.2 vCPU)
+              memory: "256Mi"    # Minimum memory requested
+            limits:
+              cpu: "500m"        # Max CPU allowed (0.5 vCPU)
+              memory: "512Mi"    # Max memory allowe
 ---
 apiVersion: v1
 kind: Service
@@ -26,8 +33,10 @@ metadata:
   name: zipkin
   namespace: microservices
 spec:
+  type: NodePort
   selector:
     app: zipkin
   ports:
     - port: 9411
       targetPort: 9411
+      nodePort: 30094
