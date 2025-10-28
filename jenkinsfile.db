@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    environment {
+        NAMESPACE = "microservices"
+    }
+
+    stages {
+        stage('Checkout Repository') {
+            steps {
+                echo "Cloning repository..."
+                git branch: 'main', url: 'https://github.com/mehdi-haidri/mehdi-haidri-Spring_Ecommerce_Project.git'
+            }
+        }
+
+        stage('Deploy Dependencies to Kubernetes') {
+            steps {
+                echo "Applying Kubernetes manifests..."
+                sh """
+                    kubectl apply -f k8s-dependencies/ --namespace=${NAMESPACE} 
+                """
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                echo "Checking if pods are running..."
+                sh """
+                    echo "Current pods in namespace ${NAMESPACE}:"
+                    kubectl get pods -n ${NAMESPACE}
+                """
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Kubernetes dependencies deployed successfully!"
+        }
+        failure {
+            echo "❌ Deployment failed. Check logs for errors."
+        }
+    }
+}
